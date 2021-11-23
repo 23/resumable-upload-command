@@ -2,9 +2,12 @@
   "name": "resumable-upload",
   "version": "1.0.0",
   "description": "",
-  "main": "upload.js",
+  "main": "index.js",
+  "bin": {
+    "resumable-upload": "index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",

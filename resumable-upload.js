@@ -33,7 +33,7 @@ module.exports = function(filename, url, params, opts) {
     if(chunkNumber<job.totalChunks) {
       var end = start+job.chunkSize-1;
     } else {
-      var end = job.totalSize;
+      var end = job.totalSize-1;
     }
     form.append('file', fs.createReadStream(job.filename, {start, end, autoClose:true}));
     
