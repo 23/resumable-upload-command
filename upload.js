@@ -21,6 +21,5 @@ if(!options.url) {
 }
 
 
-// node upload.js --filename /Users/steffentchr/Downloads/10834902.mp4 --domain preview.ranguinc.com --token bc7fkpo89D0hV90e8sFmQsSQQ886Y0bOacA2pRvZaZMuNQtFBB1Jxyg36e7OuRcf
 
 resumableUpload(options.filename, options.url, {upload_token:options.token}, {progressCallback:printProgress});
