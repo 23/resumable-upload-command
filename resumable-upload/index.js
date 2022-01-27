@@ -8,7 +8,7 @@ module.exports = function(filename, url, params, opts) {
   opts = opts||{}
   opts.concurrency = opts.concurrency||5;
   opts.retries = opts.retries||5;
-  opts.chunkSize = opts.chunkSize||10*1024*1024;
+  opts.chunkSize = opts.chunkSize||100*1024*1024;
 
   const totalSize = fs.lstatSync(filename).size;
   const totalChunks = Math.max(1, Math.floor(totalSize/opts.chunkSize));
@@ -48,7 +48,23 @@ module.exports = function(filename, url, params, opts) {
     }
     return await got.post(job.url, {
       body: form,
-      retry: job.retries
+      hooks: {
+	beforeRetry: [
+	  (error, retryCount) => {
+	    console.log(`Retrying [${retryCount}]: ${error.code}`);
+	  }
+	],
+        beforeError: [
+	  error => {
+	    const {response} = error;
+            console.log({error,response});
+            return error;
+	  }
+	]
+      },
+      retry: {
+        limit:job.retries
+      }
     });
   }
   
